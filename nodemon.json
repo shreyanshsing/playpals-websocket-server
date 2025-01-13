@@ -1,0 +1,5 @@
+{
+  "watch": ["services", "utils", "config", "index.ts"],
+  "ext": "ts",
+  "exec": "npm run build-and-run"
+}

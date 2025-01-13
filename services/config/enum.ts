@@ -1,0 +1,16 @@
+export enum WebSocketMessageType {
+    CONNECTED = 'CONNECTED',
+    SET_GAME = 'SET_GAME',
+    JOIN_GAME = 'JOIN_GAME',
+    MOVE = 'MOVE',
+    GAME_PENDING = 'PENDING',
+    GAME_START = 'START',
+    GAME_LIVE = 'LIVE',
+    GAME_OVER = 'OVER',
+    GAME_RESET = 'RESET',
+    PLAYER_COLOR = 'COLOR',
+    PLAYER_SYMBOL = 'SYMBOL',
+    PLAYER_JOINED = 'JOINED',
+    MARK_GRID = 'MARK_GRID',
+    GRID_MARKED = 'GRID_MARKED',
+}
