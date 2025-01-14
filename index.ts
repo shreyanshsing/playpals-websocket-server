@@ -26,7 +26,6 @@ const io = new Server(PORT as number, {
 const clientIdSocketMap = new ClientIdSocketMap(io);
 const gameGridMap = new GameGridMap();
 const gameClientsMap = new GameClientsMap();
-let gameChannel: GameChannel;
 
 const setGame = async (gameId: string, ws: Socket) => {
   const existingGame = await gameGridMap.get(gameId);
@@ -35,7 +34,6 @@ const setGame = async (gameId: string, ws: Socket) => {
       gameId,
       JSON.stringify({ grid: Array(9).fill(null) }) // Initialize empty grid
     );
-    gameChannel = new GameChannel(gameId);
     console.log(`Game ${gameId} created`);
   } else {
     console.log(`Game ${gameId} already exists`);
@@ -59,12 +57,6 @@ const addClientToGame = async (
 ) => {
   await gameClientsMap.set(gameId, clientId);
   await clientIdSocketMap.set(clientId, ws);
-
-  // Notify other players
-  gameChannel.publish(
-    JSON.stringify({ type: WebSocketMessageType.PLAYER_JOINED, clientId })
-  );
-
   console.log(`Client ${clientId} joined game ${gameId}`);
 };
 
@@ -103,10 +95,6 @@ const checkAndStartGame = async (gameId: string) => {
       const ws = await clientIdSocketMap.getSocketFromClientId(clientId);
       ws?.emit(WebSocketMessageType.GAME_START);
     }
-
-    await gameChannel.publish(
-      JSON.stringify({ type: WebSocketMessageType.GAME_START })
-    );
     await updateGameData(gameId, { status: WebSocketMessageType.GAME_LIVE });
     console.log(`Game ${gameId} started`);
   }
