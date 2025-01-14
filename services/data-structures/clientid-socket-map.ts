@@ -7,7 +7,8 @@ export class ClientIdSocketMap {
     private io: Server;
 
     constructor(io: Server) {
-        this.redis = new Redis();
+        const redisURL = process.env.REDISCLOUD_URL!;
+        this.redis = new Redis(redisURL);
         this.io = io;
     }
 
