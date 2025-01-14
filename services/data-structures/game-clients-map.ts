@@ -1,11 +1,15 @@
 import Redis from "ioredis";
 import { Redis_Eums } from "./enum";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export class GameClientsMap {
     private redis: Redis;
 
     constructor() {
-        this.redis = new Redis();
+        const redisURL = process.env.REDISCLOUD_URL!;
+        this.redis = new Redis(redisURL);
     }
 
     async set(gameId: string, clientId: string) {

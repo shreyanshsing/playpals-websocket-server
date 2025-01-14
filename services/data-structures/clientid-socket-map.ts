@@ -1,12 +1,16 @@
 import Redis from "ioredis";
 import { Server, Socket } from "socket.io";
 import { Redis_Eums } from "./enum";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export class ClientIdSocketMap {
     private redis: Redis;
     private io: Server;
 
     constructor(io: Server) {
+        // TODO: remove while dev
         const redisURL = process.env.REDISCLOUD_URL!;
         this.redis = new Redis(redisURL);
         this.io = io;
