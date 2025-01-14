@@ -13,11 +13,12 @@ import { getGameData, updateGameData } from "./services/handlers/game";
 dotenv.config();
 
 const PORT = process.env.PORT || 3031;
+const CLIENT_URL = process.env.PROD_CLIENT_URL;
 
 // Create a Socket.io server
 const io = new Server(PORT as number, {
   cors: {
-    origin: "http://localhost:3000", // Client's URL
+    origin: CLIENT_URL, // Client's URL
     methods: ["GET", "POST"],
   },
 });
